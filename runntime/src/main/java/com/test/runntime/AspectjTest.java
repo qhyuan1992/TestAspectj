@@ -1,4 +1,4 @@
-package com.test.aspectj;
+package com.test.runntime;
 
 import android.util.Log;
 
