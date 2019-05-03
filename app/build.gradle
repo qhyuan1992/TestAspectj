@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: com.plugin.aspectj.ThrowableAspectjPlugin
+apply plugin: 'com.test.aspectj'
 android {
     compileSdkVersion 28
     defaultConfig {

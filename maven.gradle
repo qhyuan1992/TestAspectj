@@ -1,0 +1,11 @@
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri("${rootProject.getRootDir()}/repo"))
+            pom.version = rootProject.aspectjVersion
+            pom.groupId = 'com.test.aspectj'
+        }
+    }
+}

@@ -3,7 +3,7 @@ import org.aspectj.bridge.MessageHandler
 import org.aspectj.tools.ajc.Main
 
 apply plugin: 'com.android.library'
-
+apply from: rootProject.file("maven.gradle")
 android {
     compileSdkVersion 28
 

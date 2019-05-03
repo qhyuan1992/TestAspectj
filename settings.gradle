@@ -1,1 +1,1 @@
-include ':app', ':BuildSrc', ':runntime'
+include ':app', /*':BuildSrc'*/ ':aspectj-plugin', ':runntime'
