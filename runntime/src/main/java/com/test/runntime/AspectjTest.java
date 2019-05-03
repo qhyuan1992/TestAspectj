@@ -8,6 +8,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.SourceLocation;
 
+import java.util.Set;
+
 @Aspect
 public class AspectjTest {
     @Pointcut("handler(*)")
@@ -18,11 +20,13 @@ public class AspectjTest {
         Object[] args = joinPoint.getArgs();
         if (args.length > 0 && args[0] instanceof Throwable) {
             Throwable throwable = (Throwable) args[0];
-            Log.e("beforeThrowablePointcut", "handleThrowableJoinPoint throwable:" + throwable.getMessage());
             throwable.printStackTrace();
             SourceLocation location = joinPoint.getSourceLocation();
-
-            //throw throwable;
+            String fileName = location.getWithinType().getCanonicalName();
+            Set<Class> whiteListClass = AspectjManager.whiteListMap.get(fileName);
+            if (whiteListClass == null || !whiteListClass.contains(throwable.getClass())) {
+                throw throwable;
+            }
         }
     }
 }
