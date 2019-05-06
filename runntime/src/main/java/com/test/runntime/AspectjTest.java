@@ -17,15 +17,18 @@ public class AspectjTest {
 
     @Before("throwablePointcut()")
     public void beforeThrowablePointcut(JoinPoint joinPoint) throws Throwable{
-        Object[] args = joinPoint.getArgs();
-        if (args.length > 0 && args[0] instanceof Throwable) {
-            Throwable throwable = (Throwable) args[0];
-            throwable.printStackTrace();
-            SourceLocation location = joinPoint.getSourceLocation();
-            String fileName = location.getWithinType().getCanonicalName();
-            Set<Class> whiteListClass = AspectjManager.whiteListMap.get(fileName);
-            if (whiteListClass == null || !whiteListClass.contains(throwable.getClass())) {
-                throw throwable;
+        // whiteListMap为null就不需要插装
+        if (AspectjManager.whiteListMap != null) {
+            Object[] args = joinPoint.getArgs();
+            if (args.length > 0 && args[0] instanceof Throwable) {
+                Throwable throwable = (Throwable) args[0];
+                throwable.printStackTrace();
+                SourceLocation location = joinPoint.getSourceLocation();
+                String fileName = location.getWithinType().getCanonicalName();
+                Set<Class> whiteListClass = AspectjManager.whiteListMap.get(fileName);
+                if (whiteListClass == null || !whiteListClass.contains(throwable.getClass())) {
+                    throw throwable;
+                }
             }
         }
     }
